@@ -1,0 +1,39 @@
+#! /usr/bin/env bash
+# vim: filetype=sh syntax=sh
+
+set -e
+
+if [[ $# -ne 1 ]]
+then
+  echo "Usage: ${0} <tracking_id>"
+fi
+
+BASE_URL='https://www.lasership.com/track'
+DATA_FORMAT='json'
+STATUS_KEY='.Events[0].EventLongText'
+
+function ensure()
+{
+  for _program in ${@}
+  do
+    which "$_program" > /dev/null
+
+    if [[ $? -ne 0 ]]
+    then
+      echo "Error: \"Please install ${_program}\""
+      exit 1
+    fi
+  done
+}
+
+function track()
+{
+  local _track_id="$1"
+  local _url="${BASE_URL}/${_track_id}/${DATA_FORMAT}"
+
+  curl --silent --location "$_url" | jq --raw-output "$STATUS_KEY"
+}
+
+ensure curl jq
+track ${@}
+
