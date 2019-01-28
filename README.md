@@ -20,4 +20,5 @@ Order has been delivered
 # TODO
 
 * Display event history
+* Add error handling
 
