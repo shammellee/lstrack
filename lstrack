@@ -13,7 +13,7 @@ BASE_URL='https://www.lasership.com/track'
 DATA_FORMAT='json'
 STATUS_KEY='.Events[0].EventLongText'
 
-function ensure()
+ensure()
 {
   for _program in ${@}
   do
@@ -27,7 +27,7 @@ function ensure()
   done
 }
 
-function track()
+track()
 {
   local _track_id="$1"
   local _url="${BASE_URL}/${_track_id}/${DATA_FORMAT}"
